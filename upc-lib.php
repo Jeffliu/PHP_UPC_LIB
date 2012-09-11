@@ -17,6 +17,7 @@ function UPCLIB_getCheckDigit( $GS1Number ) {
 		throw new Exception('GS1 Numbers must be whole numbers, 11 digits in length.');
 	}
 	
+	// Turn the number into an array of characters.
 	$c = str_split($GS1Number);
 	// Add the odd positions (the even array indexes)
 	$odds = $c[0] + $c[2] + $c[4] + $c[6] + $c[8] + $c[10] ;
@@ -46,7 +47,6 @@ function UPCLIB_isValidUPC($upc) {
 	} else {
 		return false;
 	}
-
 }
 
 ?>
