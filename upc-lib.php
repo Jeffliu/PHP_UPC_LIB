@@ -8,7 +8,7 @@ function UPCLIB_getUPCFromGS1Number( $GS1Number ) {
 	return $GS1Number.UPCLIB_GetCheckDigit($GS1Number);
 }
 
-function UPCLIB_GetCheckDigit( $GS1Number ) {
+function UPCLIB_getCheckDigit( $GS1Number ) {
 	
 	if( strlen($GS1Number) != 11 ) {
 		throw new Exception('GS1 Numbers must be 11 digits in length.');
@@ -41,7 +41,7 @@ function UPCLIB_isValidUPC($upc) {
 	$check = substr($upc, -1); // pull out the last number
 	$GS1Number = substr($upc, 0, -1); // pull out the first 11 numbers
 	
-	if ( $check == UPCLIB_GetCheckDigit($GS1Number) ) {
+	if ( $check == UPCLIB_getCheckDigit($GS1Number) ) {
 		return true;
 	} else {
 		return false;
