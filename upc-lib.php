@@ -1,7 +1,8 @@
 <?php
 
 // UPC Code Library
-// I know this could be cleaned up, but I tried to make it easier to read and tell what was going on than to make it fewer lines of code.
+// I know this could be cleaned up, but I tried to make it easier to read and to 
+// tell what was going on than to make it fewer lines of code.
 
 function UPCLIB_getUPCFromGS1Number( $GS1Number ) {
 	return $GS1Number.UPCLIB_GetCheckDigit($GS1Number);
@@ -21,8 +22,9 @@ function UPCLIB_GetCheckDigit( $GS1Number ) {
 	$odds = $c[0] + $c[2] + $c[4] + $c[6] + $c[8] + $c[10] ;
 	// Add the even positions (the odd array indexes)
 	$evens = $c[1] + $c[3] + $c[5] + $c[7] + $c[9] ;
-	$total = ($odds * 3) + $evens;
-	$mod10 = $total % 10;
+	$oddsTrippled = $odds * 3;
+	$sum = $oddsTrippled + $evens;
+	$mod10 = $sum % 10;
 	$reverse = 10 - $mod10;
 	if( $reverse == 10 ) { $reverse = 0; }
 	return $reverse;	
@@ -32,15 +34,19 @@ function UPCLIB_isValidUPC($upc) {
 	if( strlen($upc) != 12 ) {
 		return false;
 	}
-	
 	if( !is_int($upc) ) {
 		return false;
 	}
-	
 	// Split the GS1 from the check digit
+	$check = substr($upc, -1); // pull out the last number
+	$GS1Number = substr($upc, 0, -1); // pull out the first 11 numbers
 	
-	
-	return true;
+	if ( $check == UPCLIB_GetCheckDigit($GS1Number) ) {
+		return true;
+	} else {
+		return false;
+	}
+
 }
 
 ?>
